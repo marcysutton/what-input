@@ -60,7 +60,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports) {
 
-	module.exports = (function() {
+	module.exports = (function(window) {
 
 	  /*
 	    ---------------
@@ -68,7 +68,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    ---------------
 	  */
 
-	  // cache document.documentElement
+	  // cache global elements
+	  var global = window;
+	  var document = window.document;
 	  var docElem = document.documentElement;
 
 	  // last used input type
@@ -152,10 +154,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // and are treated separately
 
 	    // pointer events (mouse, pen, touch)
-	    if (window.PointerEvent) {
+	    if (global.PointerEvent) {
 	      docElem.addEventListener('pointerdown', updateInput);
 	      docElem.addEventListener('pointermove', setIntent);
-	    } else if (window.MSPointerEvent) {
+	    } else if (global.MSPointerEvent) {
 	      docElem.addEventListener('MSPointerDown', updateInput);
 	      docElem.addEventListener('MSPointerMove', setIntent);
 	    } else {
@@ -165,7 +167,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      docElem.addEventListener('mousemove', setIntent);
 
 	      // touch events
-	      if ('ontouchstart' in window) {
+	      if ('ontouchstart' in global) {
 	        docElem.addEventListener('touchstart', touchBuffer);
 	      }
 	    }
@@ -249,7 +251,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var touchBuffer = function(event) {
 
 	    // clear the timer if it happens to be running
-	    window.clearTimeout(touchTimer);
+	    global.clearTimeout(touchTimer);
 
 	    // set the current input
 	    updateInput(event);
@@ -258,7 +260,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    isBuffering = true;
 
 	    // run the timer
-	    touchTimer = window.setTimeout(function() {
+	    touchTimer = global.setTimeout(function() {
 
 	      // if the timer runs out, set isBuffering back to `false`
 	      isBuffering = false;
@@ -302,7 +304,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  */
 
 	  if (
-	    'addEventListener' in window &&
+	    'addEventListener' in global &&
 	    Array.prototype.indexOf
 	  ) {
 	    setUp();
@@ -328,7 +330,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  };
 
-	}());
+	}(typeof window === 'object' ? window : this));
 
 
 /***/ }
